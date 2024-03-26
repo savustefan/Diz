@@ -1,0 +1,70 @@
+﻿@model LucrareDisertatie.Models.ViewModels.AddContentRequest
+@{
+}
+
+<div class = "container py-2">
+    <form method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Header</label>
+            <input type="text" class="form-control" id="header" asp-for="Header"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" asp-for="Title" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea class="form-control" id="content" asp-for="Content"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Summary</label>
+            <input type="text" class="form-control" id="summary" asp-for="Summary" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="imageUrl" asp-for="ImageUrl" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Handle URL</label>
+            <input type="text" class="form-control" id="handleUrl" asp-for="HandleUrl" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="PostDate">Publish Date</label>
+            <input type="date" class="form-control" id="publishDate" asp-for="PostDate" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" asp-for="Author" />
+        </div>
+        
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="hidden" asp-for="Hidden">
+            <label class="form-check-label">
+                Is Hidden?
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tags</label>
+            <select class="form-select" asp-items="@Model.Tags" asp-for="SelectedTags">
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-dark">
+                Save
+            </button>
+        </div>
+
+    </form>
+</div>
