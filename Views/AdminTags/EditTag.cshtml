@@ -2,26 +2,45 @@
 
 
 <div class="container py-4">
-    <form method="post">
 
-        <div class="mb-3">
-            <label class="form-label">Id</label>
-            <input type="text" id="id" class="form-control" asp-for="Id" readonly />
-        </div>
+    @if (Model != null)
+    {
+        <form method="post">
 
-        <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" id="name" class="form-control" asp-for="Name" />
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Id</label>
+                <input type="text" id="id" class="form-control" asp-for="Id" readonly />
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Displayed Name</label>
-            <input type="text" id="displayedName" class="form-control" asp-for="DisplayedName"/>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" id="name" class="form-control" asp-for="Name" />
+            </div>
 
-        <div class="mb-3">
-            <button type="submit" class="btn btn-dark">Update Tag</button>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Displayed Name</label>
+                <input type="text" id="displayedName" class="form-control" asp-for="DisplayedName" />
+            </div>
 
-    </form>
+            <div class="mb-3">
+
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-dark">Update Tag</button>
+                    <button type="submit" class="btn btn-danger ms-2" asp-area=""
+                            asp-controller="AdminTags" asp-action="Delete">
+                        Detele Tag
+                    </button>
+                </div>
+
+
+
+            </div>
+
+        </form>
+    }
+    else
+    {
+        <p>Tag not found!</p>
+    }
+
 </div>

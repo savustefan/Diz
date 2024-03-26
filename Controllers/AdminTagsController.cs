@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using LucrareDisertatie.Data;
 
 using LucrareDisertatie.Models.Domain;
+using Microsoft.EntityFrameworkCore;
+using LucrareDisertatie.Repositories;
 
 namespace LucrareDisertatie.Controllers
 {
     public class AdminTagsController : Controller
     {
-        private ApplicationDbContext _applicationDbContext;
-        public AdminTagsController(ApplicationDbContext applicationDbContext)
+        private readonly ITagRepository _tagRepository;
+
+        public AdminTagsController(ITagRepository tagRepository)
         {
-            _applicationDbContext = applicationDbContext;  
+            _tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -22,7 +25,7 @@ namespace LucrareDisertatie.Controllers
 
         [HttpPost]
         [ActionName("Add")]
-        public IActionResult SaveTag(SaveTagRequest saveTagRequest)
+        public async Task<IActionResult> SaveTag(SaveTagRequest saveTagRequest)
         {
             //mapping SaveTagRequest to Tag domain model
             var tag = new Tag
@@ -31,25 +34,24 @@ namespace LucrareDisertatie.Controllers
                 DisplayedName = saveTagRequest.DisplayedName
             };
 
-            _applicationDbContext.Tags.Add(tag);
-            _applicationDbContext.SaveChanges();
+            await _tagRepository.AddTagAsync(tag);
 
             return RedirectToAction("ListTag");
         }
 
         [HttpGet]
         [ActionName("ListTag")]
-        public IActionResult ListTag()
+        public async Task<IActionResult> ListTag()
         {
-            var allTags = _applicationDbContext.Tags.ToList();
+            var allTags = await _tagRepository.GetAllTagsAsync();
 
             return View(allTags);
         }
 
         [HttpGet]
-        public IActionResult EditTag(Guid id)
+        public async Task <IActionResult> EditTag(Guid id)
         {
-            var tag = _applicationDbContext.Tags.FirstOrDefault(x => x.Id == id);
+            var tag = await _tagRepository.GetTagAsync(id);
 
             if (tag != null)
             {
@@ -67,7 +69,7 @@ namespace LucrareDisertatie.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditTag(EditTagRequest editTagRequest)
+        public async Task<IActionResult> EditTag(EditTagRequest editTagRequest)
         {
             var tag = new Tag
             {
@@ -76,18 +78,32 @@ namespace LucrareDisertatie.Controllers
                 DisplayedName = editTagRequest.DisplayedName
             };
 
-            var existTag = _applicationDbContext.Tags.Find(tag.Id);
-
-            if (existTag != null)
+            var updatedTag = await _tagRepository.UpdateTagAsync(tag);
+            
+            if (updatedTag != null)
             {
-                existTag.Name = tag.Name;
-                existTag.DisplayedName = tag.DisplayedName;
-
-                //save changes
-                _applicationDbContext.SaveChanges();
-                return RedirectToAction("EditTag", new  { id = editTagRequest.Id });
+                //succes
+            }
+            else
+            {
+                //error
             }
 
+            return RedirectToAction("EditTag", new { id = editTagRequest.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
+        {
+            var deletedTag = await _tagRepository.DeleteTagAsync(editTagRequest.Id);
+
+            if (deletedTag != null)
+            {
+                //succes
+                return RedirectToAction("ListTag");
+            }
+
+            //error notif
             return RedirectToAction("EditTag", new { id = editTagRequest.Id });
         }
 
