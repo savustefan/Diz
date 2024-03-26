@@ -38,6 +38,7 @@ namespace LucrareDisertatie.Controllers
         }
 
         [HttpGet]
+        [ActionName("ListTag")]
         public IActionResult ListTag()
         {
             var allTags = _applicationDbContext.Tags.ToList();
@@ -64,5 +65,31 @@ namespace LucrareDisertatie.Controllers
 
             return View(null);
         }
+
+        [HttpPost]
+        public IActionResult EditTag(EditTagRequest editTagRequest)
+        {
+            var tag = new Tag
+            {
+                Id = editTagRequest.Id,
+                Name = editTagRequest.Name,
+                DisplayedName = editTagRequest.DisplayedName
+            };
+
+            var existTag = _applicationDbContext.Tags.Find(tag.Id);
+
+            if (existTag != null)
+            {
+                existTag.Name = tag.Name;
+                existTag.DisplayedName = tag.DisplayedName;
+
+                //save changes
+                _applicationDbContext.SaveChanges();
+                return RedirectToAction("EditTag", new  { id = editTagRequest.Id });
+            }
+
+            return RedirectToAction("EditTag", new { id = editTagRequest.Id });
+        }
+
     }
 }
