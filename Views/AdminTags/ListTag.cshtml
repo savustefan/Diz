@@ -1,0 +1,44 @@
+﻿@model List<LucrareDisertatie.Models.Domain.Tag>
+@{
+}
+
+
+<div class="bg-secondary">
+    <div class="container">
+        <h1>Tags</h1>
+    </div>
+</div>
+
+<div class="container" py-5>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>DisplayedName</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <td>@tag.Id</td>
+                        <td>@tag.Name</td>
+                        <td>@tag.DisplayedName</td>
+                        <td>
+                            <a asp-area="" asp-controller="AdminTags"
+                            asp-action="EditTag" asp-route-id="@tag.Id">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No tags!</p>
+    }
+</div>

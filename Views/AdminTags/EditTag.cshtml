@@ -1,0 +1,27 @@
+﻿@model LucrareDisertatie.Models.ViewModels.EditTagRequest
+
+
+<div class="container py-4">
+    <form method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Id</label>
+            <input type="text" id="id" class="form-control" asp-for="Id" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" id="name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Displayed Name</label>
+            <input type="text" id="displayedName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-dark">Update Tag</button>
+        </div>
+
+    </form>
+</div>
