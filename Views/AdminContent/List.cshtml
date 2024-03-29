@@ -1,0 +1,57 @@
+﻿@model List<LucrareDisertatie.Models.Domain.ContentPost>
+
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All BlogPosts - Admin Functionality</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Heading</td>
+                    <td>Tags</td>
+                    <td> </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contentPost in Model)
+                {
+                    <tr>
+                        <td>@contentPost.ID</td>
+                        <td>@contentPost.Header</td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var tag in contentPost.Tags)
+                                {
+                                    <span class="badge bg-primary me-1">@tag.Name</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area=""
+                               asp-controller="AdminContent"
+                               asp-action="Edit"
+                               asp-route-id="@contentPost.ID">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Blog Posts Found!</p>
+    }
+
+</div>

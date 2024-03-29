@@ -26,6 +26,13 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-label">Img Upload</label>
+            <input type="file" id="imgUpload" class="form-control" />
+
+            <img src="" id="imgDisplay" style="display:none;width: 250px;"/>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label">Image URL</label>
             <input type="text" class="form-control" id="imageUrl" asp-for="ImageUrl" />
         </div>
@@ -68,3 +75,49 @@
 
     </form>
 </div>
+
+
+
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help', 'imagetools'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            paste_data_images: true,
+            
+        });
+
+        
+        const imgUploadElement = document.getElementById('imgUpload');
+        const imgUrlElement = document.getElementById('imageUrl');
+        const imgDisplayElement = document.getElementById('imgDisplay')
+
+        async function imgUploadFunction(e) {
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Aceept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    imgUrlElement.value = result.link;
+                    imgDisplayElement.src = result.link;
+                    imgDisplayElement.style.display = 'block'
+                });
+
+        }
+
+        imgUploadElement.addEventListener('change', imgUploadFunction);
+    </script>
+}

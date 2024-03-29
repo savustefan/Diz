@@ -8,6 +8,8 @@ namespace LucrareDisertatie.Repositories
 
         Task<ContentPost?> GetAsync(Guid id);
 
+        Task<ContentPost?> GetHandleUrlAsync(string handleUrl);
+
         Task<ContentPost> AddAsync(ContentPost contentPost);
 
         Task<ContentPost?> UpdateAsync(ContentPost contentPost);

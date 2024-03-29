@@ -1,5 +1,6 @@
 ﻿using LucrareDisertatie.Data;
 using LucrareDisertatie.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LucrareDisertatie.Repositories
 {
@@ -20,24 +21,64 @@ namespace LucrareDisertatie.Repositories
             return contentPost;
         }
 
-        public Task<ContentPost?> DeleteAsync(Guid id)
+        public async Task<ContentPost?> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var presentContent = await _applicationDbContext.ContentPosts.FindAsync(id);
+
+            if ( presentContent != null )
+            {
+                _applicationDbContext.ContentPosts.Remove(presentContent);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return presentContent;
+            }
+
+            return null;
         }
 
-        public Task<IEnumerable<ContentPost>> GetAllAsync()
+        public async Task<IEnumerable<ContentPost>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.ContentPosts.Include(x => x.Tags).ToListAsync();
         }
 
-        public Task<ContentPost?> GetAsync(Guid id)
+        public async Task<ContentPost?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.ContentPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.ID == id);
         }
 
-        public Task<ContentPost?> UpdateAsync(ContentPost contentPost)
+        public async Task<ContentPost?> GetHandleUrlAsync(string handleUrl)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.ContentPosts
+                                                .Include(x => x.Tags)
+                                                .FirstOrDefaultAsync(x => x.HandleUrl == handleUrl);
+        }
+
+
+        public async Task<ContentPost?> UpdateAsync(ContentPost contentPost)
+        {
+            var existingContent = await _applicationDbContext.ContentPosts.Include(x => x.Tags).
+                FirstOrDefaultAsync(x => x.ID == contentPost.ID);
+
+            if (existingContent != null)
+            {
+                existingContent.ID = existingContent.ID;
+                existingContent.Header = existingContent.Header;
+                existingContent.Title = existingContent.Title;
+                existingContent.Content = existingContent.Content;
+                existingContent.Summary = existingContent.Summary;
+                existingContent.Author = existingContent.Author;
+                existingContent.ImageUrl = existingContent.ImageUrl;
+                existingContent.HandleUrl = existingContent.HandleUrl;
+                existingContent.PostDate = existingContent.PostDate;
+                existingContent.Hidden = existingContent.Hidden;
+                existingContent.Tags = existingContent.Tags;
+
+                await _applicationDbContext.SaveChangesAsync();
+
+                return existingContent;
+            }
+
+            return null;
         }
     }
 }

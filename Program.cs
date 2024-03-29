@@ -12,6 +12,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbCon
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IContentRepository, ContentRepository>();
+builder.Services.AddScoped<IImageRepository, CloudImageRepository>();
 
 
 var app = builder.Build();
