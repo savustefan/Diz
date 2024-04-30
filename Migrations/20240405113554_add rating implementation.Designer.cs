@@ -4,6 +4,7 @@ using LucrareDisertatie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LucrareDisertatie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405113554_add rating implementation")]
+    partial class addratingimplementation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,32 +38,6 @@ namespace LucrareDisertatie.Migrations
                     b.HasIndex("TagsId");
 
                     b.ToTable("ContentPostTag");
-                });
-
-            modelBuilder.Entity("LucrareDisertatie.Models.Domain.ContentComment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ContentPostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContentPostId");
-
-                    b.ToTable("ContentComments");
                 });
 
             modelBuilder.Entity("LucrareDisertatie.Models.Domain.ContentPost", b =>
@@ -161,15 +138,6 @@ namespace LucrareDisertatie.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LucrareDisertatie.Models.Domain.ContentComment", b =>
-                {
-                    b.HasOne("LucrareDisertatie.Models.Domain.ContentPost", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("ContentPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LucrareDisertatie.Models.Domain.Rating", b =>
                 {
                     b.HasOne("LucrareDisertatie.Models.Domain.ContentPost", null)
@@ -181,8 +149,6 @@ namespace LucrareDisertatie.Migrations
 
             modelBuilder.Entity("LucrareDisertatie.Models.Domain.ContentPost", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618

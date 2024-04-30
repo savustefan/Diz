@@ -1,11 +1,13 @@
 ﻿using LucrareDisertatie.Models.Domain;
 using LucrareDisertatie.Models.ViewModels;
 using LucrareDisertatie.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LucrareDisertatie.Controllers
 {
+    
     public class AdminContentController : Controller
     {
         private readonly ITagRepository _tagRepository;

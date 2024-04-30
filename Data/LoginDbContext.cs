@@ -6,7 +6,7 @@ namespace LucrareDisertatie.Data
 {
     public class LoginDbContext : IdentityDbContext
     {
-        public LoginDbContext(DbContextOptions options) : base(options)
+        public LoginDbContext(DbContextOptions<LoginDbContext> options) : base(options)
         {
         }
 
@@ -63,7 +63,7 @@ namespace LucrareDisertatie.Data
                 Id = adminId
             };
 
-            adminUser.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(adminUser, "admin");
+            adminUser.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(adminUser, "admin123");
 
 
             builder.Entity<IdentityUser>().HasData(adminUser);

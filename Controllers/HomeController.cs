@@ -1,10 +1,12 @@
 using LucrareDisertatie.Models;
 using LucrareDisertatie.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace LucrareDisertatie.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

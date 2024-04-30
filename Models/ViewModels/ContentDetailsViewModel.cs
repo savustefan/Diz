@@ -1,6 +1,8 @@
-﻿namespace LucrareDisertatie.Models.Domain
+﻿using LucrareDisertatie.Models.Domain;
+
+namespace LucrareDisertatie.Models.ViewModels
 {
-    public class ContentPost
+    public class ContentDetailsViewModel
     {
         public Guid ID { get; set; }
         public string Header { get; set; }
@@ -14,8 +16,12 @@
         public bool Hidden { get; set; }
         public ICollection<Tag> Tags { get; set; }
 
-       public ICollection<Rating> Ratings { get; set; }
+        public int TotalRatings { get; set; }
 
-        public ICollection<ContentPostComment> Comments { get; set; }
+        public bool Liked { get; set; }
+
+        public string CommentDescription { get; set; }
+
+        public IEnumerable<ContentComment> Comments { get; set; }
     }
 }
