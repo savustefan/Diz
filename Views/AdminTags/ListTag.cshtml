@@ -3,6 +3,20 @@
 }
 
 
+<form method="get"
+      asp-controller="AdminTags" ,
+      asp-action="ListTag">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col col-md-3 d-flex">
+                <input type="text" class="form-control"
+                       name="search" value="@ViewBag.Search" />
+                <button type="submit" class="btn btn-warning ms-3">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="bg-secondary">
     <div class="container">
         <h1>Tags</h1>

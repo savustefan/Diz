@@ -4,7 +4,7 @@ namespace LucrareDisertatie.Repositories
 {
     public interface ITagRepository
     {
-        Task<IEnumerable <Tag>>    GetAllTagsAsync();
+        Task<IEnumerable<Tag>> GetAllTagsAsync(string? search = null);
 
         Task<Tag?> GetTagAsync(Guid id);
 

@@ -30,6 +30,7 @@ builder.Services.AddScoped<IContentRepository, ContentRepository>();
 builder.Services.AddScoped<IImageRepository, CloudImageRepository>();
 builder.Services.AddScoped<IRatingRepository, ContentRatingRepository>();
 builder.Services.AddScoped<IContentCommentsRepository, ContentPostCommentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 var app = builder.Build();

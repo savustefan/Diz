@@ -35,9 +35,18 @@ namespace LucrareDisertatie.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<Tag>> GetAllTagsAsync()
+        public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? search)
         {
-            return await _applicationDbContext.Tags.ToListAsync();
+            var searchQuery = _applicationDbContext.Tags.AsQueryable();
+
+            if (string.IsNullOrWhiteSpace(search) == false)
+            {
+                searchQuery = searchQuery.Where(x => x.Name.Contains(search) ||
+                x.DisplayedName.Contains(search));
+            }
+
+            return await searchQuery.ToListAsync();
+            //return await _applicationDbContext.Tags.ToListAsync();
         }
 
         public Task<Tag?> GetTagAsync(Guid id)

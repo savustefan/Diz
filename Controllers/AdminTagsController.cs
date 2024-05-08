@@ -41,9 +41,10 @@ namespace LucrareDisertatie.Controllers
 
         [HttpGet]
         [ActionName("ListTag")]
-        public async Task<IActionResult> ListTag()
+        public async Task<IActionResult> ListTag(string? search)
         {
-            var allTags = await _tagRepository.GetAllTagsAsync();
+            ViewBag.Search = search;
+            var allTags = await _tagRepository.GetAllTagsAsync(search);
 
             return View(allTags);
         }
