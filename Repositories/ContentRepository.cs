@@ -61,17 +61,17 @@ namespace LucrareDisertatie.Repositories
 
             if (existingContent != null)
             {
-                existingContent.ID = existingContent.ID;
-                existingContent.Header = existingContent.Header;
-                existingContent.Title = existingContent.Title;
-                existingContent.Content = existingContent.Content;
-                existingContent.Summary = existingContent.Summary;
-                existingContent.Author = existingContent.Author;
-                existingContent.ImageUrl = existingContent.ImageUrl;
-                existingContent.HandleUrl = existingContent.HandleUrl;
-                existingContent.PostDate = existingContent.PostDate;
-                existingContent.Hidden = existingContent.Hidden;
-                existingContent.Tags = existingContent.Tags;
+                existingContent.ID = contentPost.ID;
+                existingContent.Header = contentPost.Header;
+                existingContent.Title = contentPost.Title;
+                existingContent.Content = contentPost.Content;
+                existingContent.Summary = contentPost.Summary;
+                existingContent.Author = contentPost.Author;
+                existingContent.ImageUrl = contentPost.ImageUrl;
+                existingContent.HandleUrl = contentPost.HandleUrl;
+                existingContent.PostDate = contentPost.PostDate;
+                existingContent.Hidden = contentPost.Hidden;
+                existingContent.Tags = contentPost.Tags;
 
                 await _applicationDbContext.SaveChangesAsync();
 
